@@ -1,0 +1,121 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+#include <stddef.h> // For NULL
+
+// Definition for a wrapper dll
+struct DoublyListNode {
+    struct ListNode *original;  // Pointer to original node
+    struct DoublyListNode *prev; // Simulated prev pointer
+};
+
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    struct ListNode * crr_ptrA = headA;
+    struct ListNode * crr_ptrB = headB;
+    struct ListNode * prev_ptrA = NULL;
+    struct ListNode * prev_ptrB = NULL;
+    //O(m+n) to switch the sll to dll
+    while(crr_ptrA && crr_ptrB){
+        if(crr_ptrA == crr_ptrB){
+            return *crr_ptrA;
+        }
+        crr_ptrA->prev = prev_ptrA;
+        crr_ptrB->prev = prev_ptrB;
+        prev_ptrA = crr_ptrA;
+        prev_ptrB = crr_ptrB;
+        crr_ptrA = crr_ptrA->next;
+        crr_ptrB = crr_ptrB->next;
+    }
+    while(crr_ptrA){
+        if(crr_ptrA != NULL){
+            return *crr_ptrA;
+        }
+        crr_ptrA->prev = prev_ptrA;
+        prev_ptrA = crr_ptrA;
+        crr_ptrA = crr_ptrA->next;
+    }
+    while(crr_ptrB){
+        if(crr_ptrB != NULL){
+            return *crr_ptrB;
+        }
+        crr_ptrB->prev = prev_ptrB;
+        prev_ptrB = crr_ptrB;
+        crr_ptrB = crr_ptrB->next;
+    }   
+    return NULL;
+}
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+// Function to find the intersection of two singly linked lists
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    if (!headA || !headB) return NULL;
+    struct ListNode* ptrA = headA;
+    struct ListNode* ptrB = headB;
+    bool switchedA = false;
+    bool switchedB = false;
+    while(ptrA != ptrB){
+        ptrA = ptrA->next;
+        ptrB = ptrB->next;
+        if(!ptrA && !switchedA){
+            ptrA = headB;
+            switchedA = true;
+        }
+        if(!ptrB && !switchedB){
+            ptrB = headA;
+            switchedB = true;
+        }
+        if(ptrA == ptrB){
+            return ptrA;
+        }
+        if((!ptrA && switchedA)||(!ptrB && switchedB)){
+            return NULL;
+        }
+    }
+    return ptrA;
+}
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    struct ListNode* ptrA = headA;
+    struct ListNode* ptrB = headB;
+    while(ptrA != ptrB) {
+        if(!ptrA) {
+            ptrA = headB;
+        }
+        else {
+            ptrA = ptrA -> next;
+        }
+        if(!ptrB) {
+            ptrB = headA;
+        }
+         else {
+            ptrB = ptrB -> next;
+        }
+    }
+    return ptrA;
+}
