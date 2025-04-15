@@ -1,6 +1,8 @@
 |V| number of vertices
 |E| number of edges
 
+self-edge is usually for direct graph
+
 cardinality
 
 degree:
